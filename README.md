@@ -22,12 +22,12 @@ I tested everything with Windows 11 Pro installed in UEFI mode.
 You need NVIDIA Data Center Drivers. You can find the required version on the official site:
 [https://www.nvidia.com/en-us/drivers/](https://www.nvidia.com/en-us/drivers/)
 
-I used the Tesla P100 driver for Windows 11 with CUDA 12.2 because the newer CUDA 13.1 package (driver version 591.59) could not be installed during my previous attempts.
+I used the Tesla P100 driver version `539.64` for Windows 11 with CUDA 12.2 because the newer CUDA 13.1 package (driver version `591.59`) could not be installed during my previous attempts.
 
-Run the installation in Custom mode, deselect `NVIDIA Control Panel`, and install only the driver.
+Run the installation in Custom mode, deselect `RTX Desktop Manager`, and install only `Graphics Driver`.
 
 After installation, check Windows Device Manager. The Tesla P100 should operate normally.
-If you see error `Code 12` (for example, a message that the video card cannot use all available resources), check the BIOS settings listed above.
+If you see error `Code 12: This device cannot find enough free resources that it can use`, check the BIOS settings listed above.
 
 ### Ollama
 Modern versions of Ollama do not require any additional setup. In my case, Ollama used the Tesla P100 by default.
