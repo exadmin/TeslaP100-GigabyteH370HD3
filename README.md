@@ -1,33 +1,40 @@
-# How to setup Tesla P100 video-card in compute mode on Gigabyte H370 HD3 (rev.1) motherboard
-### My initial configuration
-Motherboard = Gigabyte H370 HD3
-CPU = Intel Core i5-8400
-Mem = 64Gb (DDR4 16Gb x 4, 2400 MT/s)
-BIOS = "F10" version
+# How to set up a Tesla P100 video card in compute mode on a Gigabyte H370 HD3 (rev.1) motherboard
 
-### Required setting in BIOS
-0. Update BIOS version up to F17 (tested with this on, cause "Bar Resize" option is not availabel at F10 version for example). Not - my pre-installed Windows 11 was not able to start normaly after BIOS update. I didn't research the issue and didn't try to troubleshoot it - cause it was easier for me to run Windows clean installation in background on my workstation.
-1. Intel Platform Trusted Technology = Enabled (Required for Windows 11 installation)
-2. Above 4G Decoding = Enabled (Required for Video Card to use 16Gb of VRAM)
-3. CSM Support = Disabled (Required for full UEFI mode)
-4. Bar Resize = Auto (Required for Video Card to use 16Gb of VRAM)
+### My initial configuration
+Motherboard = Gigabyte H370 HD3  
+CPU = Intel Core i5-8400  
+Mem = 64 GB (DDR4 16 GB x 4, 2400 MT/s)  
+BIOS = version "F10"
+GPU = Tesla P100 (inserted into PCIe 16x - upper slot)
+
+### Required BIOS settings
+0. Update BIOS to F17. I tested with this version because the `Resizable BAR` option is not available in F10.  
+   Note: after the BIOS update, my pre-installed Windows 11 did not boot normally. I did not troubleshoot this and instead performed a clean Windows installation on my workstation.
+1. Intel Platform Trust Technology (PTT) = Enabled (required for Windows 11 installation)
+2. Above 4G Decoding = Enabled (required for the video card to use 16 GB of VRAM)
+3. CSM Support = Disabled (required for full UEFI mode)
+4. Resizable BAR = Auto (required for the video card to use 16 GB of VRAM)
 
 ### Install Windows 11
-I've tested all with Windows 11 Pro installed in UEFI mode
+I tested everything with Windows 11 Pro installed in UEFI mode.
 
-### Install Nvidia drivers
-You need to install Nvidia Data Center Drivers, you can find required version at official site: https://www.nvidia.com/en-us/drivers/
-I've used Tesla P100 version for Windows 11 with CUDA 12.2 (cause latest one v13.1 in v.591.59 were unbale to be installed during my previous tries).
-Run installation in Custom Mode - deselect "RTX Control Panel" - just install Drivers.
+### Install NVIDIA drivers
+You need NVIDIA Data Center Drivers. You can find the required version on the official site:  
+https://www.nvidia.com/en-us/drivers/
 
-After installation check Windows "Device Manager" - the Tesla P100 video-card should operate normally.
-If you see error "Code 12", message like "Video card can't use all availabel resources" - please check BIOS seettings mentioned above.
+I used the Tesla P100 driver for Windows 11 with CUDA 12.2 because the newer CUDA 13.1 package (driver version 591.59) could not be installed during my previous attempts.
+
+Run the installation in Custom mode, deselect `NVIDIA Control Panel`, and install only the driver.
+
+After installation, check Windows Device Manager. The Tesla P100 should operate normally.  
+If you see error `Code 12` (for example, a message that the video card cannot use all available resources), check the BIOS settings listed above.
 
 ### Ollama
-Modern version of Ollama does not require any setup, I've found Tesla P100 usage by default.
-You can find Tesla usage in "Nvidia GPU Utilization" of Nvidia Control Panel 
+Modern versions of Ollama do not require any additional setup. In my case, Ollama used the Tesla P100 by default.
 
-Useful links I've found:
+You can monitor Tesla usage in NVIDIA Control Panel under GPU utilization.
+
+Useful links:
 * Gigabyte Drivers: https://www.gigabyte.com/Motherboard/H370-HD3-rev-10/support
-* Nvidia Drivers: https://www.nvidia.com/en-us/drivers/
-* Switching Tesla P100 into WDDM: https://github.com/FilipchukAl/launch_Tesla_P100 (didn't tested yet)
+* NVIDIA Drivers: https://www.nvidia.com/en-us/drivers/
+* Switching Tesla P100 to WDDM: https://github.com/FilipchukAl/launch_Tesla_P100 (not tested yet)
